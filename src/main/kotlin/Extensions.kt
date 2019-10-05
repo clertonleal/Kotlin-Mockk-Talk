@@ -1,0 +1,1 @@
+fun UserRequestEntity.toUser() = Parser.toUser(this)

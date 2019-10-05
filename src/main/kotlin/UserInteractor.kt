@@ -1,4 +1,4 @@
-class UserIteractor(private val userClient: UserClient) {
+class UserInteractor(private val userClient: UserClient) {
 
     suspend fun getAllUsers(): List<User> {
         return userClient.getAllUsers().map { Parser.toUserAsync(it) }

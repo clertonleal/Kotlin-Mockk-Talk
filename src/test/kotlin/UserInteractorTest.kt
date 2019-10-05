@@ -5,15 +5,15 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-internal class UserIteractorTest {
+internal class UserInteractorTest {
 
-    private lateinit var userIteractor: UserIteractor
+    private lateinit var userInteractor: UserInteractor
     private lateinit var userClient: UserClient
 
     @BeforeEach
     internal fun setUp() {
         userClient = mockk()
-        userIteractor = UserIteractor(userClient)
+        userInteractor = UserInteractor(userClient)
     }
 
     @Test
@@ -23,7 +23,7 @@ internal class UserIteractorTest {
             UserRequestEntity("Maria", "Das Graças")
         )
 
-        val convertedUsers = userIteractor.convertUsersObject(users)
+        val convertedUsers = userInteractor.convertUsersObject(users)
 
         val expectedUsers = listOf(
             User("José", "Silva"),
@@ -42,7 +42,7 @@ internal class UserIteractorTest {
             UserRequestEntity("Maria", "Das Graças")
         )
 
-        userIteractor.convertUsersObject(users)
+        userInteractor.convertUsersObject(users)
 
         verify { Parser.toUser(users[0]) }
         verify { Parser.toUser(users[1]) }
@@ -62,7 +62,7 @@ internal class UserIteractorTest {
 
         val users = listOf(user1, user2)
 
-        userIteractor.convertUsersExtension(users)
+        userInteractor.convertUsersExtension(users)
 
         verify { user1.toUser() }
         verify { user2.toUser() }
@@ -77,7 +77,7 @@ internal class UserIteractorTest {
             UserRequestEntity("Maria", "Das Graças")
         )
 
-        userIteractor.convertUsersTopLevel(users)
+        userInteractor.convertUsersTopLevel(users)
 
         verify { userRequestEntityToUser(users[0]) }
         verify { userRequestEntityToUser(users[1]) }
@@ -95,7 +95,7 @@ internal class UserIteractorTest {
         coEvery { userClient.getAllUsers() } returns users
 
         runBlocking {
-            userIteractor.getAllUsers()
+            userInteractor.getAllUsers()
 
             coVerify { Parser.toUserAsync(users[0]) }
             coVerify { Parser.toUserAsync(users[1]) }
